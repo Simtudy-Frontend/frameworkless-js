@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDoMVC: ayoung practice</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/styles/main.css" />
+  </head>
+  <body>
+    <section class="app">
+      <header class="header">
+        <h1>todos</h1>
+        <input type="checkbox" class="toggle-all-box hidden" />
+        <span class="toggle-all hidden"></span>
+        <input
+          class="add-todo"
+          placeholder="What needs to be done?"
+          autofocus
+        />
+      </header>
+      <main class="main">
+        <ul class="todo-list">
+          <!-- <li data-id="0">
+            <input type="checkbox" checked="checked" class="toggle-box" />
+            <span class="toggle"></span>
+            <label>000</label>
+            <input class="edit-todo" value="000" />
+            <button class="destroy"></button>
+          </li> -->
+        </ul>
+        <div class="control-box hidden">
+          <span class="todo-count">
+            <span id="left-item-cnt"></span>
+            item left
+          </span>
+          <ul class="filters">
+            <li>
+              <a href="#/" class="selected">All</a>
+            </li>
+            <li>
+              <a href="#/">Active</a>
+            </li>
+            <li>
+              <a href="#/">Completed</a>
+            </li>
+          </ul>
+          <button class="clear-completed">Clear completed</button>
+        </div>
+      </main>
+    </section>
+    <footer class="info">
+      <p>Double-click to edit a todo</p>
+      <p>Created by the TodoMVC Team</p>
+      <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+    </footer>
+    <!-- JavaScript -->
+    <script type="module" src="src/model.js"></script>
+    <script type="module" src="src/app.js"></script>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

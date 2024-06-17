@@ -1,0 +1,363 @@
+html,
+body {
+    margin: 0 auto;
+    padding: 0;
+    background: #f5f5f5;
+    color: #111111;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    max-width: 550px;
+    min-width: 230px;
+}
+
+.hidden {
+    display: none;
+}
+
+.app {
+    width: 100%;
+    background: #ffffff;
+    margin: 130px 0 40px 0;
+    position: relative;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
+        0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    /* NOTE: rgba(r, g, b, 투명도) */
+}
+
+.app h1 {
+    top: -140px;
+    width: 100%;
+    color: #b83f45;
+    font-size: 80px;
+    font-weight: 200;
+    position: absolute;
+    text-align: center;
+}
+
+.app input::placeholder {
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.add-todo,
+.edit-todo {
+    font-size: 24px;
+    box-sizing: border-box;
+    /* 
+        NOTE: box-sizing - 요소 너비/높이 계산법 지정
+            content-box
+            border-box
+    */
+}
+
+.add-todo {
+    width: 100%;
+    padding: 16px 16px 16px 60px;
+    height: 65px;
+    border: none;
+    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+}
+
+.edit-todo {
+    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.main {
+    z-index: 2;
+    border-top: 1px solid #c7c5c5;
+}
+
+
+/* toggle-all for all item completion */
+
+.toggle-all-box {
+    display: flex;
+    margin-top: 1.5px;
+    width: 55px;
+    height: 62px;
+    border: none;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    appearance: none;
+    z-index: 1;
+}
+
+.toggle-all-box:focus {
+    box-shadow: none;
+}
+
+.toggle-all {
+    margin-top: 13px;
+    width: 45px;
+    height: 43px;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+}
+
+.toggle-all:focus {
+    box-shadow: none;
+    outline: 0;
+}
+
+.toggle-all-checked {
+    color: #484848;
+}
+
+.toggle-all-box~.toggle-all {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('./assets/expand-button-gray.png')
+}
+
+.toggle-all-box:checked~.toggle-all {
+    background-image: url('./assets/expand-button.png')
+}
+
+/* todo items */
+
+.todo-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.todo-list li {
+    position: relative;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #c7c5c5;
+}
+
+.todo-list li label {
+    word-break: break-all;
+    padding: 15px 15px 15px 60px;
+    line-height: 1.2;
+    transition: color 0.4s;
+    font-weight: 400;
+    color: #484848;
+    width: 100%;
+}
+
+.todo-list .edit-todo {
+    position: relative;
+    width: 100%;
+    padding: 14px 15px 14px 15px;
+    margin: 0 0 0 43px;
+    border: 1px solid #999;
+    line-height: 1.2;
+    transition: color 0.4s;
+    font-weight: 400;
+    color: #484848;
+    z-index: 1;
+    display: flex;
+}
+
+.todo-list li:last-child {
+    border-bottom: none;
+}
+
+.todo-list li .destroy {
+    display: none;
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    margin: auto 0;
+    font-size: 30px;
+    color: #949494;
+    transition: color 0.2s ease-out;
+    background: none;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.todo-list li:hover .destroy {
+    display: block;
+}
+
+.todo-list li .destroy:hover,
+.todo-list li .destroy:focus {
+    color: #C18585;
+}
+
+.todo-list li .destroy:before {
+    content: '×';
+    display: block;
+    height: 100%;
+    margin-top: 1px;
+}
+
+
+/* item toggle box styling */
+
+.toggle-box {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    width: 37px;
+    height: 37px;
+    appearance: none;
+    z-index: 1;
+}
+
+.todo-list li .toggle {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    width: 37px;
+    height: 37px;
+    background-color: none;
+}
+
+.toggle-box~.toggle {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23949494%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
+}
+
+.toggle-box:checked~.toggle {
+    background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%2359A193%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20fill%3D%22%233EA390%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22%2F%3E%3C%2Fsvg%3E');
+}
+
+.todo-list li.completed label {
+    color: #949494;
+    text-decoration: line-through;
+}
+
+
+/* focus highlight */
+
+:focus,
+.toggle-box:focus~label {
+    box-shadow: 0 0 2px 2px #CF7D7D;
+    outline: 0;
+}
+
+
+/* control box */
+
+.control-box {
+    padding: 10px 15px;
+    height: 20px;
+    text-align: center;
+    font-size: 15px;
+    border-top: 1px solid #c7c5c5;
+}
+
+.control-box:before {
+    /* TODO: content 없으면 안생김. 무슨 원리지? */
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    /* TODO: 신기하당 나중에 좀 더 살펴보기 */
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+        0 8px 0 -3px #f6f6f6,
+        0 9px 1px -3px rgba(0, 0, 0, 0.2),
+        0 16px 0 -6px #f6f6f6,
+        0 17px 2px -6px rgba(0, 0, 0, 0.2);
+}
+
+.todo-count {
+    float: left;
+    text-align: left;
+    font-size: 15px;
+}
+
+.filters {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    right: 0;
+    left: 0;
+}
+
+.filters li {
+    display: inline;
+}
+
+.filters li a {
+    color: inherit;
+    margin: 5px;
+    padding: 3px 7px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+
+    &:hover {
+        border: 1px solid #DB7676;
+    }
+
+    &.selected {
+        border: 1px solid #CE4646;
+    }
+}
+
+.clear-completed {
+    color: inherit;
+    background: none;
+    border: none;
+    padding: .5px;
+    font-size: 15px;
+    float: right;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+
+/*  NOTE:
+    width가 460px 이하가 되면
+    filter들이 겹치게 되므로 크기랑 위치 조정함
+
+    media query
+    : CSS의 기능 중 하나로,
+      미디어 타입에 따라 스타일을 다르게 적용할 수 있는 방을 제공
+    : 반응형 웹을 구현할 때 사용
+*/
+@media (max-width: 460px) {
+    .control-box {
+        height: 40px;
+    }
+
+    .filters {
+        bottom: 8px;
+    }
+}
+
+
+/* footer */
+
+.info {
+    display: block;
+    color: #4d4d4d;
+    font-size: 11px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-align: center;
+    line-height: 1;
+}
+
+.info a {
+    font-weight: inherit;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
