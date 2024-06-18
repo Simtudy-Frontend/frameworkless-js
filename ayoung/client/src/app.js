@@ -30,11 +30,13 @@ export default class TodoApp {
 
         this.$toggleAllBox.addEventListener('click', this.handleToggleAll);
 
+        /* todo-list는 event delegation 적용 */
         this.$todoList.addEventListener('dblclick', this.handleEnterToEdit);
         this.$todoList.addEventListener('click', this.handleDestroy);
         this.$todoList.addEventListener('change', this.handleToggle);
         this.$todoList.addEventListener('keypress', this.handleEditKeypress);
         this.$todoList.addEventListener('keyup', this.handleEditKeyup);
+        /* NOTE: blur event는 버블링되지 않음 */
         this.$todoList.addEventListener('focusout', this.handleEditBlur);
     }
 
@@ -112,10 +114,12 @@ export default class TodoApp {
         if (e.target.classList.contains('edit-todo')) {
             const $item = e.target.closest("[data-id]");
             const todoItem = this.items.get($item.dataset.id);
+            /* escape된 경우에는 값을 업데이트하지 않음 */
             if (!e.target.dataset.iscanceled) {
                 todoItem.name = e.target.value;
             }
             if (todoItem.name === "") {
+                /* item 이름이 empty string이면 삭제함 */
                 this.items.delete(todoItem);
             } else {
                 this.items.update(todoItem);

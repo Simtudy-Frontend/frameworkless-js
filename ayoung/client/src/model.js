@@ -122,6 +122,14 @@ export default class TodoItems extends EventTarget {
         if (item === undefined) {
             throw "ItemNotFoundError";
         }
+        /* TODO:
+            원래 if/else문 대신에,
+
+            item.completed = !item.completed;
+
+            로 썼는데, 값이 안바뀌어서 코드를 바꿈.
+            왜인지는 이해하지 못함..
+        */
         if (item.completed) {
             item.completed = false;
         } else {
