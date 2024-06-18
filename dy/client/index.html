@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todos</title>
+
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.2/reset.min.css" />
+  <link rel="stylesheet" href="./src/style.css" />
+
+  <script defer src="./src/main.js"></script>
+</head>
+
+<body>
+  <section class="todoapp">
+    <header class="header">
+      <h1>todos</h1>
+      <input type="text" class="new-todo" placeholder="What needs to be done?" autofocus />
+    </header>
+    <main class="main">
+      <div class="toggle-all-container">
+        <input type="checkbox" id="toggle-all">
+        <label for="toggle-all" class="toggle-all-label" style="opacity: 0;">
+          <span>❯</span>
+          <!-- <div class="material-symbols-outlined">done_all</div> -->
+        </label>
+      </div>
+      <ul class="todo-list"></ul>
+    </main>
+    <footer class="footer" style="display: none;">
+      <span class="todo-count">
+        <strong>0</strong> items left
+      </span>
+      <ul class="filter">
+        <li><a href="javascript:void(0)" class="selected">All</a></li>
+        <li><a href="javascript:void(0)">Active</a></li>
+        <li><a href="javascript:void(0)">Completed</a></li>
+      </ul>
+    </footer>
+  </section>
+
+</body>
+
+</html>
