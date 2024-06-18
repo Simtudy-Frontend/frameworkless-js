@@ -1,37 +1,29 @@
-let todos = [];
-let todoIdCounter = 0;
-let filterOption = document.querySelector('.filter .selected').textContent;
+import { TodoModel } from "./model.js";
+
+const todoModel = new TodoModel();
+let filterOption = document.querySelector('.filter .selected').textContent.toLowerCase();
 
 const newTodoEl = document.querySelector('.new-todo');
-newTodoEl.addEventListener('change', function(event) {
-    todos.unshift({
-        name: event.target.value,
-        completed: false,
-        id: todoIdCounter++,
-    })
-    newTodoEl.value = "";
-    refresh();
+newTodoEl.addEventListener('change', function() {
+    const todoText = newTodoEl.value.trim();
+    if (todoText) {
+        todoModel.addTodo(todoText);
+        newTodoEl.value = "";
+        refresh();
+    }
 });
 
 const filterBtns = document.querySelectorAll('.filter li a');
 filterBtns.forEach(function(filterBtn) {
     filterBtn.addEventListener('click', function() {
-        filterOption = this.textContent;
+        filterOption = this.textContent.toLowerCase();
         refresh();
     });
 });
 
 const toggleAll = document.querySelector('#toggle-all');
 toggleAll.addEventListener('change', function() {
-    if (this.checked) {
-        todos.forEach(todo => {
-            todo.completed = true;
-        });
-    } else {
-        todos.forEach(todo => {
-            todo.completed = false;
-        });
-    }
+    todoModel.toggleTodoCompletedAll(this.checked)
     refresh();
 });
 
@@ -40,11 +32,7 @@ function refresh() {
     const todoListEl = document.querySelector('.todo-list');
     todoListEl.innerHTML = '';
 
-    const filteredTodos = todos.filter(todo => {
-        if (filterOption == 'All') return true;
-        if (filterOption == 'Active') return !todo.completed;
-        if (filterOption == 'Completed') return todo.completed;
-    });
+    const filteredTodos = todoModel.getTodos(filterOption);
 
     filteredTodos.forEach(todoItem => {
         const newTodoItem = document.createElement('li');
@@ -62,43 +50,40 @@ function refresh() {
         checkbox.checked = todoItem.completed
         checkbox.addEventListener('change', function() {
             const todoId = +this.parentElement.getAttribute('data-id');
-            todoItem = todos.find(todo => todo.id === todoId);
-            if (this.checked) {
-                todoItem.completed = true;
-            } else {
-                todoItem.completed = false;
-            }
+            todoModel.toggleTodoCompleted(todoId);
             refresh();
         });
         newTodoItem.appendChild(checkbox);
 
         const label = document.createElement("label");
-        label.textContent = todoItem.name;
+        label.textContent = todoItem.text;
         label.setAttribute('for', 'toggle')
         label.addEventListener('dblclick', function() {
             const input = document.createElement('input');
             input.classList.add('edit');
             input.type = 'text';
-            input.value = todoItem.name;
-            const originalValue = todoItem.name;
+            input.value = todoItem.text;
+            const originalValue = todoItem.text;
+
             input.addEventListener('keypress', function(event) {
                 if (event.key === 'Enter') {
-                    todoItem.name = input.value;
+                    todoModel.editTodoText(todoItem.id, input.value);
                     refresh();
                 }
             })
             input.addEventListener('blur', function() {
                 if (input.value !== originalValue) {
-                    todoItem.name = input.value;
+                    todoModel.editTodoText(todoItem.id, input.value);
                 }
                 refresh();
             });
             input.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape') {
                     input.value = originalValue;
-                    input.blur()
+                    input.blur();
                 }
             });
+            
             newTodoItem.replaceChild(input, label);
             input.focus();
         });
@@ -108,10 +93,7 @@ function refresh() {
         deleteBtn.classList.add("destroy");
         deleteBtn.addEventListener('click', function() {
             const todoId = +this.parentElement.getAttribute('data-id');
-            index = todos.findIndex(todo => todo.id === todoId);
-            if (index !== -1) {
-                todos.splice(index, 1);
-            }
+            todoModel.removeTodoById(todoId)
             refresh();
         });
         newTodoItem.appendChild(deleteBtn);
@@ -119,23 +101,18 @@ function refresh() {
         todoListEl.appendChild(newTodoItem);
     });
     
+    // Update Todo Count
     const itemsLeftCountEl = document.querySelector('.todo-count strong');
-    itemsLeftCountEl.textContent = todos.filter(todo => !todo.completed).length;
+    itemsLeftCountEl.textContent = todoModel.getIncompleteCount();
 
+    // Update Filter Buttons
     filterBtns.forEach(filterBtn => {
-        if (filterBtn.textContent === filterOption) {
+        if (filterBtn.textContent.toLowerCase() === filterOption) {
             filterBtn.classList.add('selected');
         } else {
             filterBtn.classList.remove('selected');
         }
     });
-
-    const completedItems = todos.filter(todo => todo.completed);
-    if (todos.length > 0 && completedItems.length === todos.length) {
-        toggleAll.checked = true;
-    } else {
-        toggleAll.checked = false;
-    }
 
     const toggleAllLabel = document.querySelector('.toggle-all-label');
     if (toggleAll.checked) {
@@ -146,19 +123,19 @@ function refresh() {
 
     const footer = document.querySelector('.todoapp .footer');
     const clearCompletedBtn = document.querySelector('.todoapp .footer>a');
-    if (clearCompletedBtn && completedItems.length === 0) {
+    if (clearCompletedBtn && !todoModel.hasCompleted()) {
         footer.removeChild(clearCompletedBtn);
-    } else if (!clearCompletedBtn && completedItems.length > 0) {
+    } else if (!clearCompletedBtn && todoModel.hasCompleted()) {
         const clearCompletedBtn = document.createElement('a');
         clearCompletedBtn.text = "Clear completed";
         clearCompletedBtn.addEventListener('click', function() {
-            todos = todos.filter(todo => !todo.completed);
+            todoModel.clearCompleted();
             refresh();
         });
         footer.appendChild(clearCompletedBtn);
     }
 
-    if (todos.length === 0) {
+    if (todoModel.getCount() === 0) {
         footer.style.display = "none";
         toggleAllLabel.style.opacity = "0";
     } else {
