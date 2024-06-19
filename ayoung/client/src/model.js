@@ -68,14 +68,7 @@ export default class TodoItems extends EventTarget {
         const target = this.items.find(
             (todo) => todo.id == item.id
         );
-        /*
-            TODO: 예외 처리?
-            이럴 떈 DOMError 말고 custom error를
-            정의해서 발생시키는게 적합한걸까?
-        */
-        if (target === undefined) {
-            throw "ItemNotFoundError";
-        }
+    if (!target) return
         for (const key in item) {
             target[key] = item[key];
         }
