@@ -37,9 +37,16 @@ export class TodoRenderer {
         this.render();
     }
 
+    // toggleCompletedHandler = (id) => () => {
+    //     this.model.toggleTodoCompleted(id);
+    //     this.render();
+    // }
+
     toggleCompletedHandler(id) {
-        this.model.toggleTodoCompleted(id);
-        this.render();
+        return () => {
+            this.model.toggleTodoCompleted(id);
+            this.render();
+        }
     }
 
     editTodoHandler(id, label) {
@@ -107,7 +114,8 @@ export class TodoRenderer {
             checkbox.setAttribute("type", "checkbox");
             checkbox.classList.add('toggle');
             checkbox.checked = todoItem.completed
-            checkbox.addEventListener('change', () => this.toggleCompletedHandler(todoItem.id));
+            // checkbox.addEventListener('change', () => this.toggleCompletedHandler(todoItem.id));
+            checkbox.addEventListener('change', this.toggleCompletedHandler(todoItem.id));
             newTodoItem.appendChild(checkbox);
 
             const label = document.createElement("label");
