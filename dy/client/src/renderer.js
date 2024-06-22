@@ -15,7 +15,7 @@ export class TodoRenderer {
         this.filterBtns.forEach(button => button.addEventListener('click', (event) => this.filterHandler(event)))
         this.toggleAll.addEventListener('change', (event) => this.toggleAllHandler(event))
 
-        this.refresh();
+        this.render();
     }
 
     addTodoHandler() {
@@ -23,23 +23,23 @@ export class TodoRenderer {
         if (todoText) {
             this.model.addTodo(todoText);
             this.newTodo.value = "";
-            this.refresh();
+            this.render();
         }
     }
 
     filterHandler(event) {
         this.filter = event.target.textContent.toLowerCase();
-        this.refresh();
+        this.render();
     }
 
     toggleAllHandler(event) {
         this.model.toggleTodoCompletedAll(event.target.checked)
-        this.refresh();
+        this.render();
     }
 
     toggleCompletedHandler(id) {
         this.model.toggleTodoCompleted(id);
-        this.refresh();
+        this.render();
     }
 
     editTodoHandler(id, label) {
@@ -59,14 +59,14 @@ export class TodoRenderer {
         input.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
                 this.model.editTodoText(id, input.value);
-                this.refresh();
+                this.render();
             }
         })
         input.addEventListener('blur', () => {
             if (input.value !== originalValue) {
                 this.model.editTodoText(id, input.value);
             }
-            this.refresh();
+            this.render();
         });
         input.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
@@ -81,15 +81,15 @@ export class TodoRenderer {
 
     removeTodoHandler(id) {
         this.model.removeTodoById(id);
-        this.refresh();
+        this.render();
     }
 
     clearCompletedHandler() {
         this.model.clearCompleted();
-        this.refresh();
+        this.render();
     }
 
-    refresh() {
+    render() {
         this.todoList.innerHTML = '';
 
         const filteredTodos = this.model.getTodos(this.filter);
