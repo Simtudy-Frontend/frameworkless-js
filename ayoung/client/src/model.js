@@ -46,7 +46,7 @@ export default class TodoItems extends EventTarget {
         return { ...item };
     }
 
-    gets(filter = "All") {
+    getFilteredItems(filter = "All") {
         if (filter === "All") {
             return this.items.map(todo => ({ ...todo }));
         }

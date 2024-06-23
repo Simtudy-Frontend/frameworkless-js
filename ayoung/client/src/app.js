@@ -129,7 +129,7 @@ export default class TodoApp {
 
     /* render */
     render() {
-        const filteredItems = this.items.gets(this.currentFilter);
+        const filteredItems = this.items.getFilteredItems(this.currentFilter);
         this.renderTodoList(filteredItems);
         this.renderControlBox();
     }
