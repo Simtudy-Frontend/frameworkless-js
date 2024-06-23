@@ -68,7 +68,7 @@ export default class TodoItems extends EventTarget {
         const target = this.items.find(
             (todo) => todo.id == item.id
         );
-    if (!target) return
+        if (!target) return;
         for (const key in item) {
             target[key] = item[key];
         }
@@ -128,7 +128,7 @@ export default class TodoItems extends EventTarget {
         } else {
             item.completed = true;
         }
-        this.dispatchUpdated()
+        this.dispatchUpdated();
     }
 
     toggleAll() {

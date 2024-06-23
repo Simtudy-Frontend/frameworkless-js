@@ -1,9 +1,9 @@
-import TodoItems from "./model.js"
+import TodoItems from "./model.js";
 
 export default class TodoApp {
     constructor(todos = null) {
         this.items = new TodoItems(todos);
-        this.$addTodo = document.querySelector('.add-todo')
+        this.$addTodo = document.querySelector('.add-todo');
         this.$toggleAllBox = document.querySelector('.toggle-all-box');
         this.$toggleAll = document.querySelector('.toggle-all');
         this.$todoList = document.querySelector('.todo-list');
@@ -21,7 +21,7 @@ export default class TodoApp {
 
         const btns = this.$filters.querySelectorAll('a');
         btns.forEach(btn => {
-            btn.addEventListener('click', this.handleFilter)
+            btn.addEventListener('click', this.handleFilter);
         });
 
         this.items.addEventListener('modelupdated', (e) => { this.render(); });
@@ -45,23 +45,23 @@ export default class TodoApp {
         const name = e.target.value;
         this.items.create({ name: name });
         e.target.value = '';
-    }
+    };
 
     /* filter button */
     handleFilter = (e) => {
         this.currentFilter = e.target.textContent;
         this.render();
-    }
+    };
 
     /* clearCompleted */
     handleClearCompleted = (e) => {
         this.items.deleteCompleted();
-    }
+    };
 
     /* toggleAll */
     handleToggleAll = (e) => {
         this.items.toggleAll();
-    }
+    };
 
     /* todoList */
     handleEnterToEdit = (e) => {
@@ -75,7 +75,7 @@ export default class TodoApp {
             $item.replaceChild($input, e.target);
             $input.focus();
         }
-    }
+    };
 
     handleDestroy = (e) => {
         if (e.target.classList.contains('destroy')) {
@@ -83,7 +83,7 @@ export default class TodoApp {
             const todoItem = this.items.get($item.dataset.id);
             this.items.delete(todoItem);
         }
-    }
+    };
 
     handleToggle = (e) => {
         if (e.target.classList.contains('toggle-box')) {
@@ -91,7 +91,7 @@ export default class TodoApp {
             const todoItem = this.items.get($item.dataset.id);
             this.items.toggle(todoItem);
         }
-    }
+    };
 
     handleEditKeypress = (e) => {
         if (e.target.classList.contains('edit-todo')) {
@@ -99,7 +99,7 @@ export default class TodoApp {
                 e.target.blur();
             }
         }
-    }
+    };
 
     handleEditKeyup = (e) => {
         if (e.target.classList.contains('edit-todo')) {
@@ -108,7 +108,7 @@ export default class TodoApp {
                 e.target.blur();
             }
         }
-    }
+    };
 
     handleEditBlur = (e) => {
         if (e.target.classList.contains('edit-todo')) {
@@ -125,7 +125,7 @@ export default class TodoApp {
                 this.items.update(todoItem);
             }
         }
-    }
+    };
 
     /* render */
     render() {
@@ -149,7 +149,7 @@ export default class TodoApp {
                 editing: false
             });
             this.$todoList.appendChild($newItem);
-        })
+        });
     }
 
     renderControlBox() {
@@ -189,7 +189,7 @@ export default class TodoApp {
     }
 
     createTodoItem({ id, name, completed, editing }) {
-        const $newTodoItem = document.createElement('li')
+        const $newTodoItem = document.createElement('li');
         $newTodoItem.setAttribute('data-id', id);
 
         if (completed) {
