@@ -1,7 +1,7 @@
 import { TodoAppTemplate } from "@pages/todo-app";
 import { mainStyleSheet, globalStyleSheet, resetStyleSheet } from "@app/styles";
 import { Todo } from "@shared/types";
-
+import fps from "@shared/utils/fps";
 export class TodoAppComponent extends HTMLElement {
   private todos: Todo[] = [];
   private nextId: number = 1;
@@ -12,6 +12,7 @@ export class TodoAppComponent extends HTMLElement {
 
   constructor() {
     super();
+    fps();
     document.adoptedStyleSheets = [globalStyleSheet, resetStyleSheet];
     const node = document.importNode(TodoAppTemplate.content, true);
     const shadowRoot = this.attachShadow({ mode: "open" });
