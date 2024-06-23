@@ -68,7 +68,9 @@ export default class TodoItems extends EventTarget {
         const target = this.items.find(
             (todo) => todo.id == item.id
         );
+
         if (!target) return;
+
         for (const key in item) {
             target[key] = item[key];
         }
@@ -79,9 +81,9 @@ export default class TodoItems extends EventTarget {
         const targetIndex = this.items.findIndex(
             (todo) => todo.id == id
         );
-        if (targetIndex < 0) {
-            throw "ItemNotFoundError";
-        }
+
+        if (targetIndex < 0) return;
+
         this.items.splice(targetIndex, 1);
         this.dispatchUpdated();
     }
@@ -112,22 +114,10 @@ export default class TodoItems extends EventTarget {
         const item = this.items.find(
             (todo) => todo.id == id
         );
-        if (item === undefined) {
-            throw "ItemNotFoundError";
-        }
-        /* TODO:
-            원래 if/else문 대신에,
 
-            item.completed = !item.completed;
+        if (!item) return;
 
-            로 썼는데, 값이 안바뀌어서 코드를 바꿈.
-            왜인지는 이해하지 못함..
-        */
-        if (item.completed) {
-            item.completed = false;
-        } else {
-            item.completed = true;
-        }
+        item.completed = !item.completed;
         this.dispatchUpdated();
     }
 
