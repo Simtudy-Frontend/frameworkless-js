@@ -35,7 +35,7 @@ export default class TodoItems extends EventTarget {
 
         itemId++;
 
-        this.items.push(newItem);
+        this.items.unshift(newItem);
         this.dispatchUpdated();
     }
 
