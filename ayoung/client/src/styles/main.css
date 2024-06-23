@@ -110,11 +110,11 @@ body {
 .toggle-all-box~.toggle-all {
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url('./assets/expand-button-gray.png')
+    background-image: url('/images/expand-button-gray.png')
 }
 
 .toggle-all-box:checked~.toggle-all {
-    background-image: url('./assets/expand-button.png')
+    background-image: url('/images/expand-button.png')
 }
 
 /* todo items */
