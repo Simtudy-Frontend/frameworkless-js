@@ -21,7 +21,7 @@
         />
       </header>
       <main class="main">
-        <ul class="todo-list">
+        <ul class="todo-list" data-component="todos">
           <!-- <li data-id="0">
             <input type="checkbox" checked="checked" class="toggle-box" />
             <span class="toggle"></span>
@@ -32,10 +32,10 @@
         </ul>
         <div class="control-box hidden">
           <span class="todo-count">
-            <span id="left-item-cnt"></span>
+            <span id="left-item-cnt" data-component="count"></span>
             item left
           </span>
-          <ul class="filters">
+          <ul class="filters" data-component="filters">
             <li>
               <a href="#/" class="selected">All</a>
             </li>
