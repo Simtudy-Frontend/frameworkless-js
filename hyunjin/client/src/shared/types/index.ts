@@ -1,4 +1,5 @@
 export type CurrentFilter = "All" | "Active" | "Completed";
+
 export interface Todo {
   text: string;
   completed: boolean;
@@ -14,6 +15,5 @@ export interface Component {
   (targetElement: Element, state: State): Element;
 }
 
-export interface Registry {
-  [key: string]: Component;
-}
+export type RegistryKey = "todos" | "counter" | "filters";
+export type Registry = Record<RegistryKey, Component | null>;

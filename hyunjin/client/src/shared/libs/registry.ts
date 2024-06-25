@@ -1,6 +1,10 @@
-import { State, Registry, Component } from "@shared/types";
+import { State, Registry, Component, RegistryKey } from "@shared/types";
 
-const registry: Registry = {};
+const registry: Registry = {
+  todos: null,
+  counter: null,
+  filters: null,
+};
 
 const renderWrapper = (component: Component): Component => {
   return (targetElement: Element, state: State): Element => {
@@ -9,7 +13,7 @@ const renderWrapper = (component: Component): Component => {
     const childComponents = element.querySelectorAll("[data-component]");
 
     Array.from(childComponents).forEach((target: Element) => {
-      const name = target.getAttribute("data-component") as string;
+      const name = target.getAttribute("data-component") as RegistryKey;
 
       const child = registry[name];
       if (!child) {
@@ -23,7 +27,7 @@ const renderWrapper = (component: Component): Component => {
   };
 };
 
-const add = (name: string, component: Component): void => {
+const add = (name: RegistryKey, component: Component): void => {
   registry[name] = renderWrapper(component);
 };
 
