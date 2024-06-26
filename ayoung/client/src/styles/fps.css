@@ -1,0 +1,16 @@
+.fps {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    background-color: #111;
+    color: #FFF;
+}
+
+.fps::after {
+    content: " fps";
+    font-size: 10px;
+    color: #c7c7c7;
+}
