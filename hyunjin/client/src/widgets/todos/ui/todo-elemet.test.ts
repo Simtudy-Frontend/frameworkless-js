@@ -12,11 +12,11 @@ describe("TodoElement", () => {
       expect(element.classList.contains("completed")).toBe(true);
 
       // "input.toggle"의 "checked" 속성이 true인지 확인
-      const inputToggle = element.querySelector("input.toggle") as HTMLInputElement;
+      const inputToggle = element.querySelector("input.toggle-todo-input") as HTMLInputElement;
       expect(inputToggle.checked).toBe(true);
 
       //button.destroy의 dataset.index가 index로 설정되었는지 확인
-      const buttonDestroy = element.querySelector("button.destroy") as HTMLButtonElement;
+      const buttonDestroy = element.querySelector("button.remove-todo-button") as HTMLButtonElement;
       expect(buttonDestroy.dataset.index).toBe("0");
     }
   });
