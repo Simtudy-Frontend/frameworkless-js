@@ -3,8 +3,14 @@ import { TodoElement } from "./todo-elemet";
 
 export const Todos = (targetElement: Element, { todos }: State) => {
   const newTodoList = targetElement.cloneNode(true) as Element;
-  const todosElements = todos.map(TodoElement).join("");
-  newTodoList.innerHTML = todosElements;
+  newTodoList.innerHTML = "";
+
+  todos.map(TodoElement).forEach((element) => {
+    if (element) {
+      newTodoList.appendChild(element);
+    }
+  });
+
   return newTodoList;
 };
 

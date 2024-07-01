@@ -1,21 +1,36 @@
 import { Todo } from "@shared/types";
 
-export const TodoElement = (todo: Todo) => {
-  const { text, completed, id } = todo;
-  return `
-        <template id="todo-item">
-          <li class="todo-item ${completed ? "completed" : ""}" data-id="${id}">
-            <div class="display-todo">
-              <label for="toggle-todo" class="toggle-todo-label visually-hidden">Toggle Todo</label>
-              <input id="toggle-todo" class="toggle-todo-input" type="checkbox" ${completed ? "checked" : ""} />
-              <span class="todo-item-text truncate-singleline" tabindex="0">${text}</span>
-              <button class="remove-todo-button" title="Remove Todo"></button>
-            </div>
-            <div class="edit-todo-container">
-              <label for="edit-todo" class="edit-todo-label visually-hidden">Edit todo</label>
-              <input id="edit-todo" class="edit-todo-input" />
-            </div>
-          </li>
-        </template>
-      `;
+let template: HTMLTemplateElement;
+
+const createNewTodoNode = (): HTMLElement => {
+  if (!template) {
+    template = document.getElementById("todo-item") as HTMLTemplateElement;
+  }
+
+  const firstChild = template?.content?.firstElementChild;
+  return firstChild?.cloneNode(true) as HTMLElement;
+};
+
+export const TodoElement = (todo: Todo, index: number): HTMLElement | null => {
+  const { text, completed } = todo;
+  const element = createNewTodoNode();
+
+  if (!element) return null;
+
+  const inputEdit = element.querySelector("input.edit") as HTMLInputElement;
+  const label = element.querySelector("label");
+  const inputToggle = element.querySelector("input.toggle") as HTMLInputElement;
+  const buttonDestroy = element.querySelector("button.destroy") as HTMLButtonElement;
+
+  if (inputEdit) inputEdit.value = text;
+  if (label) label.textContent = text;
+
+  if (completed) {
+    element.classList.add("completed");
+    if (inputToggle) inputToggle.checked = true;
+  }
+
+  if (buttonDestroy) buttonDestroy.dataset.index = index.toString();
+
+  return element;
 };
