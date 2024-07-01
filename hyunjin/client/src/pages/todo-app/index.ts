@@ -1,2 +1,2 @@
-export { TodoAppTemplate } from "./ui";
+export { TodoApp } from "./ui";
 export * from "./model";
