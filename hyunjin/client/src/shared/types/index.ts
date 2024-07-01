@@ -15,5 +15,5 @@ export interface Component {
   (targetElement: Element, state: State): Element;
 }
 
-export type RegistryKey = "todos" | "counter" | "filters";
+export type RegistryKey = "app" | "todos" | "counter" | "filters";
 export type Registry = Record<RegistryKey, Component | null>;

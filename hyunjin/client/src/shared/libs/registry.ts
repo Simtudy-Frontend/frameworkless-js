@@ -1,6 +1,7 @@
 import { State, Registry, Component, RegistryKey } from "@shared/types";
 
 const registry: Registry = {
+  app: null,
   todos: null,
   counter: null,
   filters: null,
