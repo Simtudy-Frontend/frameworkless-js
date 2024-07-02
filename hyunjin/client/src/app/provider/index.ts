@@ -16,6 +16,20 @@ const state: State = {
   currentFilter: "All",
 };
 
+const events: Events = {
+  deleteItem: (index: number) => {
+    state.todos.splice(index, 1);
+    render();
+  },
+  addItem: (text: string) => {
+    state.todos.push({
+      text,
+      completed: false,
+      id: state.todos.length + 1,
+    });
+    render();
+  },
+};
 const render = () => {
   window.requestAnimationFrame(() => {
     const main = document.querySelector("#root") as Element;
