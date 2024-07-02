@@ -1,6 +1,6 @@
 let template: HTMLTemplateElement;
 
-export const createTodo = () => {
+export const createTodoNode = () => {
   if (!template) {
     template = document.getElementById("todo-item") as HTMLTemplateElement;
   }

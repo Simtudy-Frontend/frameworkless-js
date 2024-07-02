@@ -1,9 +1,9 @@
 import { Todo } from "@shared/types";
-import { createTodo } from "../model";
+import { createTodoNode } from "../model";
 
 export const TodoElement = (todo: Todo, index: number) => {
   const { text, completed } = todo;
-  const element = createTodo();
+  const element = createTodoNode();
   if (element) {
     const inputEdit = element.querySelector("input.edit-todo-input") as HTMLInputElement;
     const label = element.querySelector("toggle-todo-label");
