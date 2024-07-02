@@ -17,3 +17,8 @@ export interface Component {
 
 export type RegistryKey = "app" | "todos" | "counter" | "filters";
 export type Registry = Record<RegistryKey, Component | null>;
+
+export interface Events {
+  deleteItem: (index: number) => void;
+  addItem: (text: string) => void;
+}
