@@ -12,7 +12,8 @@ registry.add("counter", Counter);
 registry.add("filters", Filters);
 
 const state: State = {
-  todos: getTodos(),
+  // todos: getTodos(),
+  todos: [],
   currentFilter: "All",
 };
 
