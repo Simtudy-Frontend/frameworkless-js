@@ -1,6 +1,6 @@
 import { TodoApp } from "@pages/todo-app";
 import { registry, applyDiff } from "@shared/libs";
-import { State } from "@shared/types/index.js";
+import { Events, State } from "@shared/types/index.js";
 import { getTodos } from "@shared/utils";
 import { Counter } from "@widgets/counter";
 import { Filters } from "@widgets/filters";
@@ -30,10 +30,11 @@ const events: Events = {
     render();
   },
 };
+
 const render = () => {
   window.requestAnimationFrame(() => {
     const main = document.querySelector("#root") as Element;
-    const newMain = registry.renderRoot(main, state);
+    const newMain = registry.renderRoot(main, state, events);
     applyDiff(document.body, main, newMain);
   });
 };

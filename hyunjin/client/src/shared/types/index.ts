@@ -12,7 +12,7 @@ export interface State {
 }
 
 export interface Component {
-  (targetElement: Element, state: State): Element;
+  (targetElement: Element, state: State, events: Events): Element;
 }
 
 export type RegistryKey = "app" | "todos" | "counter" | "filters";
