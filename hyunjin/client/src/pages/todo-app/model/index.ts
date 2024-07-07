@@ -1,1 +1,2 @@
-export { TodoAppComponent } from "./todo-app-component";
+export { createAppElement } from "./create-app-element";
+export { addEvents } from "./add-event";

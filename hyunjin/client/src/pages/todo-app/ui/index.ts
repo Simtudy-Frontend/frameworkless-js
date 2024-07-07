@@ -1,1 +1,1 @@
-export { template as TodoAppTemplate } from "./todo-app-template";
+export { TodoApp } from "./todo-app";

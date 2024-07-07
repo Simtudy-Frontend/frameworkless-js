@@ -2,10 +2,22 @@ import { Todo } from "@shared/types";
 import { TodoElement } from "./todo-elemet";
 
 describe("TodoElement", () => {
-  it('완료된 할 일에 대해 "completed" class 및 "checked" 속성을 포함해야 합니다.', () => {
+  it("todo-item의 completed, checked, index가 설정되었는지", () => {
     const todo: Todo = { id: 2, text: "Completed Todo", completed: true };
-    const result = TodoElement(todo);
-    expect(result).toContain("todo-item completed");
-    expect(result).toContain("checked");
+    const newTodoList = document.createElement("div");
+    newTodoList.innerHTML = "";
+    const element = TodoElement(todo, 0);
+    if (element) {
+      // "completed" 클래스가 추가되었는지 확인
+      expect(element.classList.contains("completed")).toBe(true);
+
+      // "input.toggle"의 "checked" 속성이 true인지 확인
+      const inputToggle = element.querySelector("input.toggle-todo-input") as HTMLInputElement;
+      expect(inputToggle.checked).toBe(true);
+
+      //button.destroy의 dataset.index가 index로 설정되었는지 확인
+      const buttonDestroy = element.querySelector("button.remove-todo-button") as HTMLButtonElement;
+      expect(buttonDestroy.dataset.index).toBe("0");
+    }
   });
 });

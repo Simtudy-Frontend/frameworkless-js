@@ -20,7 +20,7 @@ const isNodeChanged = (node1: Element, node2: Element): boolean => {
     return true;
   }
 
-  if (node1.childNodes.length === 0 && node2.childNodes.length === 0 && node1.textContent !== node2.textContent) {
+  if (node1.children.length === 0 && node2.children.length === 0 && node1.textContent !== node2.textContent) {
     return true;
   }
 
@@ -43,8 +43,8 @@ const applyDiff = (parentNode: Element, realNode: Element, virtualNode: Element)
     return;
   }
 
-  const realChildren = Array.from(realNode.childNodes);
-  const virtualChildren = Array.from(virtualNode.childNodes);
+  const realChildren = Array.from(realNode.children);
+  const virtualChildren = Array.from(virtualNode.children);
 
   const max = Math.max(realChildren.length, virtualChildren.length);
 

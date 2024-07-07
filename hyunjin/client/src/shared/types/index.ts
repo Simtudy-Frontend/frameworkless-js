@@ -12,8 +12,13 @@ export interface State {
 }
 
 export interface Component {
-  (targetElement: Element, state: State): Element;
+  (targetElement: Element, state: State, events: Events): Element;
 }
 
-export type RegistryKey = "todos" | "counter" | "filters";
+export type RegistryKey = "app" | "todos" | "counter" | "filters";
 export type Registry = Record<RegistryKey, Component | null>;
+
+export interface Events {
+  deleteItem: (index: number) => void;
+  addItem: (text: string) => void;
+}
