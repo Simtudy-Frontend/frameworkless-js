@@ -10,9 +10,24 @@
   </head>
 
   <body>
-    <header class="header">
-      <a href="#"><h1 class="title">todos</h1></a>
-    </header>
+    <template id="todo-filter">
+      <footer class="bottombar">
+        <div class="todo-status"><span class="todo-count" data-component="counter">0</span> item left</div>
+        <ul class="filter-list" data-component="filters">
+          <li class="filter-item">
+            <a id="filter-link-all" class="filter-link" href="#/" data-route="all">All</a>
+          </li>
+          <li class="filter-item">
+            <a id="filter-link-active" class="filter-link" href="#/active" data-route="active">Active</a>
+          </li>
+          <li class="filter-item">
+            <a id="filter-link-completed" class="filter-link" href="#/completed" data-route="completed">Completed</a>
+          </li>
+        </ul>
+        <button id="clear-completed" class="clear-completed-button">Clear completed</button>
+      </footer>
+    </template>
+
     <template id="todo-item">
       <li class="todo-item">
         <div class="display-todo">
@@ -41,35 +56,22 @@
           </div>
         </header>
         <main class="main">
-          <ul class="todo-list" data-component="todos"></ul>
+          <todo-list></todo-list>
         </main>
-        <footer class="bottombar">
-          <div class="todo-status"><span class="todo-count" data-component="counter">0</span> item left</div>
-          <ul class="filter-list" data-component="filters">
-            <li class="filter-item">
-              <a id="filter-link-all" class="filter-link selected" href="#/" data-route="all">All</a>
-            </li>
-            <li class="filter-item">
-              <a id="filter-link-active" class="filter-link" href="#/active" data-route="active">Active</a>
-            </li>
-            <li class="filter-item">
-              <a id="filter-link-completed" class="filter-link" href="#/completed" data-route="completed">Completed</a>
-            </li>
-          </ul>
-          <button id="clear-completed" class="clear-completed-button">Clear completed</button>
-        </footer>
+        <todo-filter></todo-filter>
       </section>
     </template>
 
-    <div id="root">
-      <div data-component="app"></div>
-    </div>
+    <header class="header">
+      <a href="#"><h1 class="title">todos</h1></a>
+    </header>
+
+    <todo-app></todo-app>
 
     <footer class="footer">
       <p class="footer-text">Double-click to edit a todo</p>
       <p class="footer-text">Created by the TodoMVC Team</p>
       <p class="footer-text">Part of <a href="http://todomvc.com">TodoMVC</a></p>
     </footer>
-    <!-- <todo-app></todo-app> -->
   </body>
 </html>
