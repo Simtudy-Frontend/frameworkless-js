@@ -22,3 +22,19 @@ export interface Events {
   deleteItem: (index: number) => void;
   addItem: (text: string) => void;
 }
+
+export enum EVENTS {
+  DELETE_ITEM = "DELETE_ITEM",
+  SELECT_FILTER = "SELECT_FILTER",
+}
+
+export interface TodoFilterElement extends Omit<HTMLUListElement, "addEventListener"> {
+  todos: Todo[];
+  currentFilter: CurrentFilter;
+  addEventListener(type: typeof EVENTS.SELECT_FILTER, listener: (e: CustomEvent) => void): void;
+}
+
+export interface TodoListElement extends Omit<HTMLUListElement, "addEventListener"> {
+  todos: Todo[];
+  addEventListener(type: typeof EVENTS.DELETE_ITEM | "click", listener: (e: CustomEvent) => void): void;
+}
