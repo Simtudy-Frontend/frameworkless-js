@@ -1,22 +1,67 @@
-import { Events, State } from "@shared/types";
-import { TodoElement } from "./todo-elemet";
+import { EVENTS, Todo, TodoListElement } from "@shared/types";
+import { getTodoElement } from "./todo-elemet";
 
-export const Todos = (targetElement: Element, { todos }: State, { deleteItem }: Events) => {
-  const newTodoList = targetElement.cloneNode(true) as HTMLUListElement;
-  newTodoList.innerHTML = "";
+const TEMPLATE = '<ul class="todo-list"></ul>';
 
-  todos.map(TodoElement)!.forEach((element) => {
-    if (element) newTodoList.appendChild(element);
-  });
+export default class TodoList extends HTMLElement {
+  private itemTemplate: HTMLTemplateElement | undefined;
+  private list!: TodoListElement;
 
-  newTodoList.addEventListener("click", (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
+  static get observedAttributes() {
+    return ["todos"];
+  }
 
-    if (target.matches("button.remove-todo-button")) {
-      deleteItem(Number(target.dataset.index));
+  get todos(): Todo[] {
+    if (!this.hasAttribute("todos")) {
+      return [];
     }
-  });
-  return newTodoList;
-};
 
-export default Todos;
+    const todosAttribute = this.getAttribute("todos") || "[]";
+    return JSON.parse(todosAttribute);
+  }
+
+  set todos(value: Todo[]) {
+    this.setAttribute("todos", JSON.stringify(value));
+  }
+
+  onDeleteClick(index: number) {
+    const event = new CustomEvent(EVENTS.DELETE_ITEM, {
+      detail: {
+        index,
+      },
+    });
+
+    this.dispatchEvent(event);
+  }
+
+  createNewTodoNode(): Element {
+    return this.itemTemplate!.content!.firstElementChild!.cloneNode(true) as Element;
+  }
+
+  updateList() {
+    this.list!.innerHTML = "";
+
+    this.todos.map(getTodoElement).forEach((element) => {
+      this.list!.appendChild(element as HTMLElement);
+    });
+  }
+
+  connectedCallback() {
+    this.innerHTML = TEMPLATE;
+    this.itemTemplate = document.getElementById("todo-item") as HTMLTemplateElement;
+
+    this.list = this.querySelector("ul") as TodoListElement;
+
+    this.list.addEventListener("click", (e) => {
+      if ((e.target as Element).matches("button.remove-todo-button")) {
+        this.onDeleteClick(parseInt((e.target as HTMLElement).dataset.index!));
+      }
+    });
+
+    this.updateList();
+  }
+
+  attributeChangedCallback() {
+    this.updateList();
+  }
+}

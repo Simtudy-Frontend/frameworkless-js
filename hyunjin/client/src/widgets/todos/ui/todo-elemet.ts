@@ -1,7 +1,7 @@
 import { Todo } from "@shared/types";
 import { createTodoNode } from "../model";
 
-export const TodoElement = (todo: Todo, index: number) => {
+export const getTodoElement = (todo: Todo, index: number) => {
   const { text, completed } = todo;
   const element = createTodoNode();
   if (element) {
