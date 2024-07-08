@@ -1,6 +1,6 @@
 import { State } from "@shared/types"; // State 타입을 임포트합니다.
-import Filters from "../ui";
 import { getTodos } from "@shared/utils";
+import TodoFilter from "../ui";
 
 describe("Filters", () => {
   it('currentFilter를 기반으로 "선택된" 필터가 올바르게 적용 되었는지.', () => {
@@ -19,7 +19,7 @@ describe("Filters", () => {
     `;
 
     // Filters 함수를 호출하고 결과를 받습니다.
-    const result = Filters(targetElement, state);
+    const result = new TodoFilter();
 
     // 결과로 받은 요소 내에서 "selected" 클래스를 가진 항목을 찾습니다.
     const selectedItems = result.querySelectorAll(".filter-list.selected");
