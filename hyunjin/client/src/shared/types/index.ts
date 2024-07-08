@@ -3,7 +3,7 @@ export type CurrentFilter = "All" | "Active" | "Completed";
 export interface Todo {
   text: string;
   completed: boolean;
-  id: number;
+  id?: number;
 }
 
 export interface State {
