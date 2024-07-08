@@ -1,43 +1,43 @@
 import { TodoApp } from "@pages/todo-app";
-import { registry, applyDiff } from "@shared/libs";
-import { Events, State } from "@shared/types/index.js";
-import { getTodos } from "@shared/utils";
-import { Counter } from "@widgets/counter";
-import { Filters } from "@widgets/filters";
-import { Todos } from "@widgets/todos";
+import { TodoFilter } from "@widgets/filter";
+import { TodoList } from "@widgets/todos";
 
-registry.add("app", TodoApp);
-registry.add("todos", Todos);
-registry.add("counter", Counter);
-registry.add("filters", Filters);
+window.customElements.define("todo-app", TodoApp);
+window.customElements.define("todo-filter", TodoFilter);
+window.customElements.define("todo-list", TodoList);
 
-const state: State = {
-  // todos: getTodos(),
-  todos: [],
-  currentFilter: "All",
-};
+// registry.add("app", TodoApp);
+// registry.add("todos", Todos);
+// registry.add("counter", Counter);
+// registry.add("filters", Filters);
 
-const events: Events = {
-  deleteItem: (index: number) => {
-    state.todos.splice(index, 1);
-    render();
-  },
-  addItem: (text: string) => {
-    state.todos.push({
-      text,
-      completed: false,
-      id: state.todos.length + 1,
-    });
-    render();
-  },
-};
+// const state: State = {
+//   // todos: getTodos(),
+//   todos: [],
+//   currentFilter: "All",
+// };
 
-const render = () => {
-  window.requestAnimationFrame(() => {
-    const main = document.querySelector("#root") as Element;
-    const newMain = registry.renderRoot(main, state, events);
-    applyDiff(document.body, main, newMain);
-  });
-};
+// const events: Events = {
+//   deleteItem: (index: number) => {
+//     state.todos.splice(index, 1);
+//     render();
+//   },
+//   addItem: (text: string) => {
+//     state.todos.push({
+//       text,
+//       completed: false,
+//       id: state.todos.length + 1,
+//     });
+//     render();
+//   },
+// };
 
-render();
+// const render = () => {
+//   window.requestAnimationFrame(() => {
+//     const main = document.querySelector("#root") as Element;
+//     const newMain = registry.renderRoot(main, state, events);
+//     applyDiff(document.body, main, newMain);
+//   });
+// };
+
+// render();
