@@ -1,5 +1,10 @@
 import { EVENTS, TodoFilterElement, State, TodoListElement, Filter } from "@shared/types";
 
+const FilterMap: Record<string, Filter> = {
+  all: "All",
+  active: "Active",
+  completed: "Completed",
+};
 export default class TodoApp extends HTMLElement {
   private state: State;
   private template: HTMLTemplateElement | null;
@@ -42,9 +47,10 @@ export default class TodoApp extends HTMLElement {
 
   connectedCallback() {
     window.requestAnimationFrame(() => {
-      console.log(window.location.search);
+      const hash = window.location.hash;
+      const path = hash.substring(hash.indexOf("/") + 1) as keyof typeof FilterMap;
 
-      this.state.filter = history.state?.filter || "All";
+      this.state.filter = FilterMap[path] || "All";
       const content = this.template!.content.firstElementChild!.cloneNode(true);
 
       this.appendChild(content);
