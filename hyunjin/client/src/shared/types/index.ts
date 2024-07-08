@@ -1,4 +1,4 @@
-export type CurrentFilter = "All" | "Active" | "Completed";
+export type Filter = "All" | "Active" | "Completed";
 
 export interface Todo {
   text: string;
@@ -8,7 +8,7 @@ export interface Todo {
 
 export interface State {
   todos: Todo[];
-  currentFilter: CurrentFilter;
+  filter: Filter;
 }
 
 export interface Component {
@@ -30,7 +30,7 @@ export enum EVENTS {
 
 export interface TodoFilterElement extends Omit<HTMLUListElement, "addEventListener"> {
   todos: Todo[];
-  currentFilter: CurrentFilter;
+  selected: Filter;
   addEventListener(type: typeof EVENTS.SELECT_FILTER, listener: (e: CustomEvent) => void): void;
 }
 

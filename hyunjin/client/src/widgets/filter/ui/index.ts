@@ -1,9 +1,9 @@
-import { CurrentFilter, EVENTS, Todo } from "@shared/types";
+import { Filter, EVENTS, Todo } from "@shared/types";
 import { getTodoCount } from "../model";
 
 export default class TodoFilter extends HTMLElement {
   static get observedAttributes() {
-    return ["currentFilter", "todos"];
+    return ["selected", "todos"];
   }
 
   get todos(): Todo[] {
@@ -18,26 +18,32 @@ export default class TodoFilter extends HTMLElement {
     this.setAttribute("todos", JSON.stringify(value));
   }
 
-  get currentFilter() {
-    return this.getAttribute("currentFilter");
+  get selected() {
+    return this.getAttribute("selected");
   }
 
-  set currentFilter(value) {
+  set selected(value) {
     if (!value) return;
-
-    this.setAttribute("currentFilter", value);
+    this.setAttribute("selected", value);
   }
 
   connectedCallback(): void {
     this.render();
-  }
-
-  attributeChangedCallback(): void {
     this.updateFilterLinks();
     this.updateTodoCount();
   }
 
-  private render(): void {
+  attributeChangedCallback(name: string) {
+    if (name === "selected") {
+      this.updateFilterLinks();
+    }
+
+    if (name === "todos") {
+      this.updateTodoCount();
+    }
+  }
+
+  render() {
     if (!this.isConnected) {
       return;
     }
@@ -51,13 +57,13 @@ export default class TodoFilter extends HTMLElement {
 
     this.addEventListener("click", (e) => {
       if ((e.target as Element).matches("li a")) {
-        const currentFilter = (e.target as Element).textContent;
-        this.handleFilterClick(currentFilter as CurrentFilter);
+        const filter = (e.target as Element).textContent;
+        this.handleFilterClick(filter as Filter);
       }
     });
   }
 
-  handleFilterClick(currentFilter: CurrentFilter) {
+  handleFilterClick(currentFilter: Filter) {
     const event = new CustomEvent(EVENTS.SELECT_FILTER, {
       detail: {
         currentFilter,
@@ -68,11 +74,10 @@ export default class TodoFilter extends HTMLElement {
   }
 
   updateFilterLinks(): void {
-    const { currentFilter } = this;
-    console.log(currentFilter);
+    const { selected: selectedFilter } = this;
 
     this.querySelectorAll("li a").forEach((a) => {
-      if (a.textContent === currentFilter) {
+      if (a.textContent === selectedFilter) {
         a.classList.add("selected");
       } else {
         a.classList.remove("selected");

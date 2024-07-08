@@ -7,7 +7,7 @@ describe("Filters", () => {
     // 테스트 대상인 currentFilter 상태를 설정합니다.
     const state: State = {
       todos: getTodos(),
-      currentFilter: "Active",
+      filter: "Active",
     };
 
     // DOM 요소를 생성하고, 필터 리스트 항목을 시뮬레이션하기 위해 클래스와 텍스트 콘텐츠를 추가합니다.
@@ -26,6 +26,6 @@ describe("Filters", () => {
 
     // "selected" 클래스가 올바르게 적용되었는지 검증합니다.
     expect(selectedItems.length).toBe(1); // "selected" 클래스를 가진 항목이 하나만 있는지 확인합니다.
-    expect(selectedItems[0].textContent).toBe(state.currentFilter); // 해당 항목의 텍스트 콘텐츠가 currentFilter와 일치하는지 확인합니다.
+    expect(selectedItems[0].textContent).toBe(state.filter); // 해당 항목의 텍스트 콘텐츠가 currentFilter와 일치하는지 확인합니다.
   });
 });

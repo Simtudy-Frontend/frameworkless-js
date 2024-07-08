@@ -1,4 +1,4 @@
-import { EVENTS, TodoFilterElement, State, TodoListElement, CurrentFilter } from "@shared/types";
+import { EVENTS, TodoFilterElement, State, TodoListElement, Filter } from "@shared/types";
 
 export default class TodoApp extends HTMLElement {
   private state: State;
@@ -10,7 +10,7 @@ export default class TodoApp extends HTMLElement {
     super();
     this.state = {
       todos: [],
-      currentFilter: "All",
+      filter: "All",
     };
 
     this.template = document.getElementById("todo-app") as HTMLTemplateElement;
@@ -29,21 +29,22 @@ export default class TodoApp extends HTMLElement {
     this.syncAttributes();
   }
 
-  selectFilter(currentFilter: CurrentFilter) {
-    console.log(currentFilter);
-
-    this.state.currentFilter = currentFilter;
+  selectFilter(value: Filter) {
+    this.state.filter = value;
     this.syncAttributes();
   }
 
   syncAttributes() {
     this.list.todos = this.state.todos;
     this.filter.todos = this.state.todos;
-    this.filter.currentFilter = this.state.currentFilter;
+    this.filter.selected = this.state.filter;
   }
 
   connectedCallback() {
     window.requestAnimationFrame(() => {
+      console.log(window.location.search);
+
+      this.state.filter = history.state?.filter || "All";
       const content = this.template!.content.firstElementChild!.cloneNode(true);
 
       this.appendChild(content);
