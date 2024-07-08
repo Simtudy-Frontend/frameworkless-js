@@ -1,1 +1,1 @@
-export { TodoApp } from "./todo-app";
+export { default as TodoApp } from "./todo-app";
